@@ -14,3 +14,75 @@ int getDegree(int adj[][MAX], int V, int u) {
     return degree;
 }
 
+
+
+Konu: Heap (Min-Heap)
+Soru: Bir Min-Heap dizisine yeni eleman eklendiğinde, heap özelliğini korumak için yapılan "Yukarı Taşıma" (Percolate Up) işlemini yapan döngüyü yazınız. (İpucu: Eklenen elemanı babasıyla (parent) kıyasla, küçükse yer değiştir.)
+
+// heap[]: Dizi, index: Yeni eklenen elemanın indisi
+void percolateUp(int heap[], int index) {
+    // Kök düğüme (0) gelene kadar devam et
+    while (index > 0) {
+        int parent = (index - 1) / 2;
+        
+        // Eğer çocuk babadan küçükse kural bozulmuştur, takas et (Min-Heap)
+        if (heap[index] < heap[parent]) {
+            swap(heap[index], heap[parent]);
+            index = parent; // Yukarı tırmanmaya devam et
+        } else {
+            break; // Kural sağlanıyorsa dur
+        }
+    }
+}
+
+
+
+
+Konu: Hash Table (Linear Probing)
+Soru: Linear Probing (Doğrusal Araştırma) yönteminde çakışma (collision) olduğunda boş yer bulana kadar ilerleyen arama (search) mantığını yazınız.
+
+
+
+
+// table[]: Hash tablosu, key: Aranan değer, size: Tablo boyutu
+int searchLinearProbing(int table[], int size, int key) {
+    int index = key % size; // Hash fonksiyonu
+    int start = index;      // Başlangıç noktasını sakla (sonsuz döngü olmasın)
+
+    while (table[index] != -1) { // -1 boş anlamına gelir
+        if (table[index] == key) {
+            return index; // Bulundu
+        }
+        
+        // Bir sonrakine bak (Linear Probing)
+        index = (index + 1) % size;
+        
+        // Eğer başladığımız yere dönersek tablo doludur veya eleman yoktur
+        if (index == start) break;
+    }
+    return -1; // Bulunamadı
+}
+
+
+
+
+Konu: Sıralama (Insertion Sort)
+Soru: Insertion Sort (Eklemeli Sıralama) algoritmasında, eldeki elemanı sıralı kısımda doğru yere yerleştiren while döngüsünü yazınız.
+
+
+
+
+void insertionSortPart(int arr[], int n) {
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        // Kilit nokta burası: Kendinden büyükleri sağa kaydır
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        // Boşalan yere elemanı koy
+        arr[j + 1] = key;
+    }
+}
